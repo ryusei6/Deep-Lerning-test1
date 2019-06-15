@@ -5,7 +5,7 @@ from keras.layers import Dense
 
 batch_size = 128
 n_classes = 10
-epochs = 1
+epochs = 10
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 x_train = x_train.reshape(60000, 28, 28, 1)
