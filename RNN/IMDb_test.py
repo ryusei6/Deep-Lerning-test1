@@ -39,7 +39,7 @@ model.add(Embedding(input_dim=max_features,
                                   output_dim=128,
                                   input_length=max_len))
 model.add(LSTM(32, return_sequences=False))
-model.add((2))
+model.add(Dence(2))
 model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy',
                       optimizer='adam',
