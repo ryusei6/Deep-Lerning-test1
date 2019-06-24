@@ -7,14 +7,12 @@ from keras.preprocessing import sequence
 import numpy as np
 from matplotlib import pyplot as plt
 
-
 max_features = 20000
 (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=max_features)
 
 max_len = 180
 X_train = sequence.pad_sequences(X_train, maxlen=max_len)
 X_test = sequence.pad_sequences(X_test, maxlen=max_len)
-
 
 word_index = imdb.get_word_index()
 reverse_word_index = dict([(value, key) for (key, value) in word_index.items()])
@@ -27,7 +25,6 @@ for k in range(10):
     else:
         print('negative')
     print(decoded_review)
-
 
 y_train = to_categorical(y_train, 2)
 y_test = to_categorical(y_test, 2)
@@ -47,7 +44,6 @@ model.compile(loss='categorical_crossentropy',
 model.fit(X_train, y_train, batch_size=256, epochs=5, validation_split=0.1)
 
 
-
 # 検証
 # positive
 test_sentence = "It is a wonderful movie that I want to go to see again."
@@ -58,19 +54,15 @@ def split_text(text):
     result = []
     for word in text.split():
         word = word.lower()
-
         try:
             index = word_index[word]
         except(KeyError):
             index = 0
         result.append(index)
-
     return result
 
 x = [split_text(test_sentence)]
 x = sequence.pad_sequences(x, maxlen=max_len)
 print(x)
-
-
 y = model.predict(x)
 print(y)
