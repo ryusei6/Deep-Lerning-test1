@@ -1,4 +1,5 @@
 # numpy==1.16.1
+
 from keras.models import Sequential
 from keras.datasets import imdb
 from keras.layers import Dense, Activation, Embedding, LSTM, GRU, SimpleRNN
