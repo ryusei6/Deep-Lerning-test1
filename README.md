@@ -1,7 +1,7 @@
 # Deep_Lerning_test1
 
-### インストール
+### Install
 `$ pip install -r requirements.txt`  
 
-VAE.py  
+#### Graphviz(VAE.py)  
 https://www.graphviz.org/
