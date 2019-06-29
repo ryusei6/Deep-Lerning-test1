@@ -1,7 +1,10 @@
 # Deep_Lerning_test1
+python 3.7.1
 
-### インストール
-`$ pip install -r requirements.txt`  
+## Install
+```
+$ pip install -r requirements.txt
+```
 
-VAE.py  
+### Graphviz(VAE.py)  
 https://www.graphviz.org/
