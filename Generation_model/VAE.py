@@ -31,7 +31,7 @@ input_shape = (original_dim, )
 intermediate_dim = 512
 batch_size = 128
 latent_dim = 2
-epochs = 2
+epochs = 30
 
 
 # VAE の実装
@@ -47,7 +47,7 @@ z = Lambda(sampling, output_shape=(latent_dim,), name='z')([z_mean, z_log_var])
 # Encoder
 encoder = Model(inputs, [z_mean, z_log_var, z], name='encoder')
 encoder.summary()
-plot_model(encoder, to_file='vae_mlp_encoder.png', show_shapes=True)
+# plot_model(encoder, to_file='vae_mlp_encoder.png', show_shapes=True)
 
 # Decoder
 latent_inputs = Input(shape=(latent_dim,), name='z_sampling')
@@ -56,7 +56,7 @@ outputs = Dense(original_dim, activation='sigmoid')(x)
 
 decoder = Model(latent_inputs, outputs, name='decoder')
 decoder.summary()
-plot_model(decoder, to_file='vae_mlp_decoder.png', show_shapes=True)
+# plot_model(decoder, to_file='vae_mlp_decoder.png', show_shapes=True)
 
 # VAE 全体をモデル化する
 z_output = encoder(inputs)[2]
@@ -80,9 +80,7 @@ vae.add_loss(vae_loss)
 vae.compile(optimizer='adam')
 vae.summary()
 
-plot_model(vae,
-           to_file='vae_mlp.png',
-           show_shapes=True)
+# plot_model(vae,to_file='vae_mlp.png',show_shapes=True)
 
 vae.fit(x_train,
         epochs=epochs,
@@ -100,8 +98,7 @@ def plot_results(encoder,
                  batch_size=128,
                  model_name="vae_mnist"):
 
-    z_mean, _, _ = encoder.predict(x_test,
-                                   batch_size=batch_size)
+    z_mean, _, _ = encoder.predict(x_test,batch_size=batch_size)
     plt.figure(figsize=(12, 10))
     cmap=cm.tab10
     plt.scatter(z_mean[:, 0], z_mean[:, 1], c=cmap(y_test))
@@ -115,13 +112,13 @@ def plot_results(encoder,
 
 
     #
-    # (-4, -4) から (4, 4) までを30x30分割してプロットする
+    # (-4, -4) から (4, 4) までを30x30分割してプロットする(z1,z2)
     #
     n = 30
     digit_size = 28
     figure = np.zeros((digit_size * n, digit_size * n))
     grid_x = np.linspace(-4, 4, n)
-    grid_y = np.linspace(-4, 4, n)[::-1]
+    grid_y = np.linspace(-4, 4, n)[::-1] #左上(-4,4)から表示する
 
     for i, yi in enumerate(grid_y):
         for j, xi in enumerate(grid_x):
@@ -130,7 +127,6 @@ def plot_results(encoder,
             digit = x_decoded[0].reshape(digit_size, digit_size)
             figure[i * digit_size: (i + 1) * digit_size,
                    j * digit_size: (j + 1) * digit_size] = digit
-
     plt.figure(figsize=(10, 10))
     start_range = digit_size // 2
     end_range = n * digit_size + start_range + 1
