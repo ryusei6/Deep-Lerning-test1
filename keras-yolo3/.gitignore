@@ -1,5 +1,6 @@
-*.jpg
-*.png
+out.jpg
+#*.jpg
+#*.png
 *.weights
 *.h5
 logs/
