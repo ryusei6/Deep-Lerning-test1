@@ -12,4 +12,4 @@ https://www.graphviz.org/
 
 ## Usage  
 ### keras-yolo3/yolo.py  
-https://qiita.com/yoyoyo_/items/10d550b03b4b9c175d9c (参照)
+Refer to https://qiita.com/yoyoyo_/items/10d550b03b4b9c175d9c.
