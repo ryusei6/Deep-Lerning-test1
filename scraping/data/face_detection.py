@@ -53,7 +53,7 @@ def face_detect(directory_name):
             if error > error_max:
                 print('Probably unsupported format images are included.')
                 break
-            pass
+            continue
 
 
 def main():
