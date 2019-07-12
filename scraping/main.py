@@ -16,7 +16,7 @@ from keras.layers import BatchNormalization, Dropout
 
 img_data = []
 img_label = []
-categories = ['LarryPage_face','JeffBezos']
+categories = ['LarryPage_face','JeffBezos_face']
 
 
 def _make_sample(files):
