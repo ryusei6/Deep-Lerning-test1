@@ -16,8 +16,9 @@ from keras.layers import BatchNormalization, Dropout
 
 img_data = []
 img_label = []
-categories = ['LarryPage_face','JeffBezos_face']
-
+categories = ['LarryPage_face','JeffBezos_face','MarkZuckerberg_face']
+img_size = [150,150,3]
+n_classes = len(categories)
 
 def _make_sample(files):
     for category, file_name in files:
@@ -49,7 +50,6 @@ def read_img():
     x_train, y_train = _make_sample(train)
     x_test, y_test = _make_sample(test)
 
-    n_classes = len(categories)
     x_train = x_train.astype('float32')
     x_test = x_test.astype('float32')
     x_train /= 255
@@ -63,12 +63,12 @@ def read_img():
 
 def learn_model(x_train, y_train, x_test, y_test):
     model = Sequential()
-    model.add(Conv2D(64, (3,3), padding='same', activation='relu',input_shape=(150,150,3)))
+    model.add(Conv2D(64, (3,3), padding='same', activation='relu',input_shape=(img_size[0],img_size[1],img_size[2])))
     model.add(Conv2D(64, (3,3), padding='same',activation='relu'))
     model.add(MaxPool2D()) # model.add(MaxPool2D((2,2)))
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
-    model.add(Dense(2, activation='softmax'))
+    model.add(Dense(n_classes, activation='softmax'))
     model.compile(optimizer='sgd',
                  loss='categorical_crossentropy',
                  metrics=['accuracy'])
@@ -79,35 +79,48 @@ def learn_model(x_train, y_train, x_test, y_test):
                       epochs=10,
                       batch_size=6,
                       validation_data=(x_test,y_test))
-    return model
+    return model, history
 
 
-def show_result(history):
-    acc = history.history['acc']
-    val_acc = history.history['val_acc']
-    loss = history.history['loss']
-    val_loss = history.history['val_loss']
+# グラフ
+def plot_history_loss(history):
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='best')
+    plt.show()
 
-    epochs = range(len(acc))
 
-    plt.plot(epochs, acc, 'bo', label='Training acc')
-    plt.plot(epochs, val_acc, 'b', label='Validation acc')
-    plt.title('Training and validation accuracy')
-    plt.legend()
+def plot_history_acc(history):
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='best')
+    plt.show()
 
-    plt.figure()
 
-    plt.plot(epochs, loss, 'bo', label='Training loss')
-    plt.plot(epochs, val_loss, 'b', label='Validation loss')
-    plt.title('Training and validation loss')
-    plt.legend()
+# imgサンプル
+def img_show(model, x_train, y_train):
+    predict = model.predict(x_train)
+    plt.figure(figsize=(20,20))
+    for i in range(10):
+        plt.subplot(1,10,i+1)
+        plt.title('predict: '+str(predict[i].argmax())+'\nanswer: '+str(y_train[i].argmax()))
+        plt.axis("off")
+        plt.imshow(x_train[i].reshape(150,150,3))
     plt.show()
 
 
 def main():
     x_train, y_train, x_test, y_test = read_img()
-    history = learn_model(x_train, y_train, x_test, y_test)
-    show_result(history)
+    model, history = learn_model(x_train, y_train, x_test, y_test)
+    plot_history_loss(history)
+    plot_history_acc(history)
+    img_show(model, x_train, y_train)
 
 
 if __name__ == '__main__':
