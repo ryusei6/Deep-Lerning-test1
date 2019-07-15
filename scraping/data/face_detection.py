@@ -9,12 +9,12 @@ faceCascade = cv2.CascadeClassifier(cascade_path)
 
 def face_detect(directory_name):
     # 処理前のフォルダ
-    input_path = './imgs/'+directory_name+'/'
+    input_dir = './imgs/'+directory_name+'/'
     # 処理後のフォルダ
-    save_path = input_path[0:-1]+'_face/'
-    os.makedirs(save_path, exist_ok=True)
+    output_dir = input_dir[0:-1]+'_face/'
+    os.makedirs(output_dir, exist_ok=True)
 
-    file = os.listdir(input_path)
+    file = os.listdir(input_dir)
     image_num = len(file)
 
     error = 0
@@ -23,7 +23,7 @@ def face_detect(directory_name):
     error_max = 100
     while counter < image_num:
         try:
-            img = cv2.imread(input_path + str(file_num).zfill(4) + '.jpg', cv2.IMREAD_COLOR)
+            img = cv2.imread(input_dir + str(file_num).zfill(4) + '.jpg', cv2.IMREAD_COLOR)
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             # 画像がなければここでexceptへ
             face = faceCascade.detectMultiScale(gray, 1.1, 3)
@@ -40,7 +40,7 @@ def face_detect(directory_name):
                     y = rect[1]
                     w = rect[2]
                     h = rect[3]
-                    cv2.imwrite(save_path + str(file_num).zfill(4) + '_' + str(face_num+1) + '_cutted.jpg', img[y:y+h, x:x+w])
+                    cv2.imwrite(output_dir + str(file_num).zfill(4) + '_' + str(face_num+1) + '_cutted.jpg', img[y:y+h, x:x+w])
                     print('successful')
             else:
                 print('-> ' + str(file_num).zfill(4) + '.jpg: No Face')
