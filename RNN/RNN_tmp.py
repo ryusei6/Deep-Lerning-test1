@@ -63,17 +63,20 @@ plt.show()
 
 
 # 1つの学習データの時間の長さ -> 25
-f = toy_problem(T=200)
+f = toy_problem(T=100)
 x_train, y_train = make_dataset(f)
-future_test = x_train
+print(x_train.shape)
+future_test = x_train[175]
 print(future_test.shape)
-time_length = future_test.shape[1]
+time_length = future_test.shape[0]
+
 # 未来の予測データを保存していく変数
-future_result = np.empty((1))
+future_result = np.array([])
+
 # 未来予想
 for step2 in range(400):
-#     test_data = np.reshape(future_test[step2], ( 1,time_length, 1))
-    batch_predict = model.predict(future_test)
+    test_data= np.reshape(future_test, (1, time_length, 1))
+    batch_predict = model.predict(test_data)
 
     future_test = np.delete(future_test, 0)
     future_test = np.append(future_test, batch_predict)
@@ -89,14 +92,13 @@ plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", l
 plt.legend()
 plt.show()
 
-
-f = toy_problem(T=200)
-x_train, y_train = make_dataset(f)
-print(x_train)
-
-plt.figure()
-# plt.plot(range(25,len(predicted)+25),predicted, color="r", label="predict_data")
-plt.plot(range(0, len(f)), f, color="b", label="row_data")
-plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", label="future_predict")
-plt.legend()
-plt.show()
+# f = toy_problem(T=200)
+# x_train, y_train = make_dataset(f)
+# print(x_train)
+#
+# plt.figure()
+# # plt.plot(range(25,len(predicted)+25),predicted, color="r", label="predict_data")
+# plt.plot(range(0, len(f)), f, color="b", label="row_data")
+# plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", label="future_predict")
+# plt.legend()
+# plt.show()
