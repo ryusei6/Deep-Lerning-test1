@@ -19,10 +19,8 @@ def toy_problem(T=100, ampl=0.05):
 
 f = toy_problem()
 
-
 def make_dataset(low_data, n_prev=100):
     data, target = [], []
-    maxlen = 25
     for i in range(len(low_data)-maxlen):
         data.append(low_data[i:i + maxlen])
         target.append(low_data[i + maxlen])
@@ -58,48 +56,31 @@ model.fit(x_train, y_train,
 predicted = model.predict(x_train)
 plt.figure()
 plt.plot(range(0,len(f)),f,color='b',label='raw')
-plt.plot(range(25,len(predicted)+25),predicted,color='r',label='predict')
+plt.plot(range(maxlen,len(predicted)+maxlen),predicted,color='r',label='predict')
 plt.legend()
 plt.show()
 
 
-# 1つの学習データの時間の長さ -> 25
 f = toy_problem(T=100)
 x_train, y_train = make_dataset(f)
 print(x_train.shape)
-<<<<<<< HEAD:RNN/LSTM_sin.py
 future_test = x_train[200-maxlen]
-=======
-future_test = x_train[175]
-print(future_test.shape)
->>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
 time_length = future_test.shape[0]
 
 # 未来の予測データを保存していく変数
 future_result = np.array([])
-<<<<<<< HEAD:RNN/LSTM_sin.py
-=======
-
-# 未来予想
-for step2 in range(400):
-    test_data= np.reshape(future_test, (1, time_length, 1))
-    batch_predict = model.predict(test_data)
->>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
 
 # 未来予想
 array = []
 for i in range(400):
     test_data= np.reshape(future_test, (1, time_length, 1))
     batch_predict = model.predict(test_data)
-#     print(batch_predict.shape)
     future_test = np.delete(future_test, 0)
     future_test = np.append(future_test, batch_predict)
 
     future_result = np.append(future_result, batch_predict)
     array.append(batch_predict[0][0])
-plt.figure()
-plt.plot(range(len(array)),array)
-plt.show()
+
 # sin波をプロット
 plt.figure()
 plt.plot(range(maxlen,len(predicted)+maxlen),predicted, color="r", label="predict_data")
@@ -107,18 +88,3 @@ plt.plot(range(0, len(f)), f, color="b", label="row_data")
 plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", label="future_predict")
 plt.legend()
 plt.show()
-
-<<<<<<< HEAD:RNN/LSTM_sin.py
-
-=======
->>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
-# f = toy_problem(T=200)
-# x_train, y_train = make_dataset(f)
-# print(x_train)
-#
-# plt.figure()
-# # plt.plot(range(25,len(predicted)+25),predicted, color="r", label="predict_data")
-# plt.plot(range(0, len(f)), f, color="b", label="row_data")
-# plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", label="future_predict")
-# plt.legend()
-# plt.show()
