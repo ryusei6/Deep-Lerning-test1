@@ -67,11 +67,24 @@ plt.show()
 f = toy_problem(T=100)
 x_train, y_train = make_dataset(f)
 print(x_train.shape)
+<<<<<<< HEAD:RNN/LSTM_sin.py
 future_test = x_train[200-maxlen]
+=======
+future_test = x_train[175]
+print(future_test.shape)
+>>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
 time_length = future_test.shape[0]
 
 # 未来の予測データを保存していく変数
 future_result = np.array([])
+<<<<<<< HEAD:RNN/LSTM_sin.py
+=======
+
+# 未来予想
+for step2 in range(400):
+    test_data= np.reshape(future_test, (1, time_length, 1))
+    batch_predict = model.predict(test_data)
+>>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
 
 # 未来予想
 array = []
@@ -95,7 +108,10 @@ plt.plot(range(0+len(f), len(future_result)+len(f)), future_result, color="g", l
 plt.legend()
 plt.show()
 
+<<<<<<< HEAD:RNN/LSTM_sin.py
 
+=======
+>>>>>>> a32a57063a7f1b3ad399d486c12c71b44c7bd8ee:RNN/RNN_tmp.py
 # f = toy_problem(T=200)
 # x_train, y_train = make_dataset(f)
 # print(x_train)
