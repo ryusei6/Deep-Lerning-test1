@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import keras
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, GRU
 from keras.optimizers import RMSprop
@@ -39,14 +40,14 @@ def standardization(X_train, y_train, X_test):
     return scaler, X_train_std, X_test_std, y_train_std
 
 
-## 訓練 RNN
 def create_model(X_train_std):
     model = Sequential()
     model.add(GRU(128, input_shape=(None, X_train_std.shape[-1]),return_sequences=False))
     model.add(Dense(1))
-    model.compile(optimizer=RMSprop(), loss='mae', metrics=['accuracy'])
+    model.compile(optimizer=RMSprop(), loss='mae')
     model.summary()
     return model
+
 
 def show_loss(result):
     ## 訓練の損失値をプロット
@@ -57,6 +58,7 @@ def show_loss(result):
     plt.ylabel('loss')
     plt.legend()
     plt.show()
+
 
 def show_predict(model, scaler, X_test_std, y_test):
     ## 予測値
@@ -73,28 +75,37 @@ def show_predict(model, scaler, X_test_std, y_test):
     plt.xticks(range(0, len(pre_date), ticks), pre_date[::ticks])
     plt.xticks(rotation=70)
     plt.legend()
-
     plt.show()
 
+
+def load_model():
+    model = keras.models.load_model('model.h5', compile=False)
+    return model
 
 def main():
     # 訓練、テスト用データ
     test_size = 0.2
     train_size = int(len(closing_price) * (1 - test_size))
-    print(train_size)
     X_train, y_train = make_dataset(closing_price[0:train_size])
     X_test, y_test = make_dataset(closing_price[train_size:])
 
     scaler, X_train_std, X_test_std, y_train_std = standardization(X_train, y_train, X_test)
-    model = create_model(X_train_std)
 
-    result = model.fit(X_train_std, y_train_std,
-                      batch_size=256,
-                      epochs=epochs,
-                      validation_split=0.1)
+    # 学習済みモデル
+    model = load_model()
 
-    show_loss(result)
+    # 学習させる場合は下をコメントアウト
+    # model = create_model(X_train_std)
+    # result = model.fit(X_train_std, y_train_std,
+    #                   batch_size=256,
+    #                   epochs=epochs,
+    #                   validation_split=0.1)
+
+    # show_loss(result)
+
     show_predict(model, scaler, X_test_std, y_test)
+    # model.save('model.h5', include_optimizer=False)
+
 
 if __name__ == '__main__':
     main()
