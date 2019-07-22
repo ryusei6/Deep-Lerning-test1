@@ -1,7 +1,6 @@
 import keras
 import urllib
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
 
 lookback = 30

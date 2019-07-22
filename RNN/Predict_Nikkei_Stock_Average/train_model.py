@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 import keras
 from keras.models import Sequential
 from keras.optimizers import RMSprop
-from keras.layers import Dense, LSTM, GRU
+from keras.layers import Dense, GRU
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import mean_squared_error
-
 
 ## 予測に必要な日数
 lookback = 30
@@ -104,10 +102,10 @@ def main():
     scaler, X_train_std, y_train_std, X_test_std = standardization(X_train, y_train, X_test)
 
     # 学習済みモデルを使用
-    # model = load_model()
+    model = load_model()
 
     # 学習させる場合は下を実行
-    model = train_model(X_train_std, y_train_std)
+    # model = train_model(X_train_std, y_train_std)
 
     show_predict(model, scaler, X_test_std, y_test)
 
