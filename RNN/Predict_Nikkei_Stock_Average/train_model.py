@@ -76,11 +76,6 @@ def show_predict(model, scaler, X_test_std, y_test):
     plt.show()
 
 
-def load_model():
-    model = keras.models.load_model('model.h5', compile=False)
-    return model
-
-
 def train_model(X_train_std, y_train_std):
     model = create_model(X_train_std)
     result = model.fit(X_train_std, y_train_std,
@@ -102,7 +97,7 @@ def main():
     scaler, X_train_std, y_train_std, X_test_std = standardization(X_train, y_train, X_test)
 
     # 学習済みモデルを使用
-    model = load_model()
+    model = keras.models.load_model('model.h5', compile=False)
 
     # 学習させる場合は下を実行
     # model = train_model(X_train_std, y_train_std)
