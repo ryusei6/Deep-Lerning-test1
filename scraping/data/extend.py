@@ -5,6 +5,7 @@ import argparse
 import numpy as np
 from keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array, array_to_img
 
+
 # 画像を拡張する関数
 def draw_images(generator, x, dir_name, index, output_dir):
     save_name = 'extened-' + str(index)
@@ -40,14 +41,13 @@ def extend_img(directory_name):
         draw_images(datagen, x, output_dir, i, output_dir)
 
 
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--directory', help='input images location (following ./imgs/ )', type=str, required=True)
     args = parser.parse_args()
     directory_name = args.directory
     extend_img(directory_name)
+
 
 if __name__ == '__main__':
     main()
