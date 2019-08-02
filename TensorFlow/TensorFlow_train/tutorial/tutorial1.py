@@ -67,6 +67,7 @@ def plot_value_array(i, predictions_array, true_label):
 
 predictions = model.predict(test_images)
 
+
 # X個のテスト画像、予測されたラベル、正解ラベルを表示。
 # 正しい予測は青で、間違った予測は赤で表示
 num_rows = 5
