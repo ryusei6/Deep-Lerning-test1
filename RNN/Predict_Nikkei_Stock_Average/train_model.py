@@ -47,7 +47,7 @@ def create_model(X_train_std):
 
 
 def show_loss(result):
-    ## 訓練の損失値をプロット
+    # 訓練の損失値をプロット
     epochs = range(len(result.history['loss']))
     plt.plot(epochs, result.history['loss'], 'b', alpha=0.6, label='train', linewidth=1)
     plt.plot(epochs, result.history['val_loss'], 'r', alpha=0.6, label='test', linewidth=1)
@@ -58,13 +58,13 @@ def show_loss(result):
 
 
 def show_predict(model, scaler, X_test_std, y_test):
-    ## 予測値
+    # 予測値
     df_predict_std = pd.DataFrame(model.predict(X_test_std), columns=['予測値'])
 
-    ## 予測値を元に戻す
+    # 予測値を元に戻す
     predict = scaler.inverse_transform(df_predict_std['予測値'].values)
 
-    ## 予測結果をプロット
+    # 予測結果をプロット
     pre_date = df.index[-len(y_test):].values
     plt.figure(figsize=(10, 6))
     plt.plot(pre_date, y_test, 'b', alpha=0.6, marker='.', label='result', linewidth=1)
