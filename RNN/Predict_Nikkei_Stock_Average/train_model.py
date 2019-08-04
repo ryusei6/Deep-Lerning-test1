@@ -7,7 +7,7 @@ from keras.optimizers import RMSprop
 from keras.layers import Dense, GRU
 from sklearn.preprocessing import StandardScaler
 
-## 予測に必要な日数
+# 予測に必要な日数
 lookback = 30
 epochs = 200
 
@@ -26,7 +26,7 @@ def make_dataset(low_data):
     return re_data, re_target
 
 
-## 標準化
+# 標準化
 def standardization(X_train, y_train, X_test):
     scaler = StandardScaler()
     scaler.fit(X_train)
