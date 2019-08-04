@@ -7,6 +7,7 @@ from keras.optimizers import RMSprop
 from keras.layers import Dense, GRU
 from sklearn.preprocessing import StandardScaler
 
+
 # 予測に必要な日数
 lookback = 30
 epochs = 200
