@@ -1,5 +1,5 @@
-# 平均二乗誤差（MSE: Mean Squared Error）は回帰問題に使われる一般的な損失関数です（分類問題には異なる損失関数が使われます）。
-# 同様に、回帰問題に使われる評価指標も分類問題とは異なります。回帰問題の一般的な評価指標は平均絶対誤差（MAE: Mean Absolute Error）です。
+# 回帰問題,損失関数: 平均二乗誤差（MSE: Mean Squared Error）
+# 回帰問題,評価指標: 平均絶対誤差（MAE: Mean Absolute Error）
 
 import pathlib
 import pandas as pd
