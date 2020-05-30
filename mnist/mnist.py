@@ -3,9 +3,9 @@ from keras.datasets import mnist
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers.convolutional import Conv2D
-from keras.layers.pooling import MaxPool2D, GlobalAveragePooling2D
+from keras.layers.pooling import MaxPool2D
 from keras.layers.core import Activation, Flatten
-from keras.layers import BatchNormalization, Dropout
+
 
 batch_size = 128
 n_classes = 10
